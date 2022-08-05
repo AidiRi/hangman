@@ -25,7 +25,10 @@ class Hangman
 
 	def begin
 		# ask user for a letter
-		puts "New game started... your clue is #{@word.first}"
+		puts "New game started... your word is #{ @word.first.size } characters long"
+		puts "Clue: #{ @word.last }"
+		puts "Enter a letter"
+
 		# ? .chomp; removes return line?
 		guess = gets.chomp
 
