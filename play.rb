@@ -26,10 +26,18 @@ class Hangman
 	def begin
 		# ask user for a letter
 		puts "New game started... your word is #{ @word.first.size } characters long"
-		puts "Clue: #{ @word.last }"
-		puts "Enter a letter"
+		word_teaser = ""
 
-		# ? .chomp; removes return line?
+		@word.first.size.times do 
+			# word_teaser = word_teaser.concat("_ ")
+			word_teaser += "_ "
+		end
+		puts word_teaser
+
+		puts "Clue: #{ @word.last }"
+		
+		puts "Enter a letter"
+		# .chomp	=> removes \r return line as default
 		guess = gets.chomp
 
 		puts "You guess #{guess}"
