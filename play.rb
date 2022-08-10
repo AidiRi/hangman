@@ -7,6 +7,7 @@ class Hangman
 		# @word; turn var into instance var; can be accessed in any method in the class
 		# ? .sample 
 		@word = words.sample
+		@lives = 7
 	end
 
 	# arr of arrs[word, clue/hint]
@@ -22,25 +23,49 @@ class Hangman
 		]
 	end
 
-
-	def begin
-		# ask user for a letter
-		puts "New game started... your word is #{ @word.first.size } characters long"
+	def print_teaser
 		word_teaser = ""
 
 		@word.first.size.times do 
 			# word_teaser = word_teaser.concat("_ ")
 			word_teaser += "_ "
 		end
-		puts word_teaser
 
+		puts word_teaser
+	end
+
+	def make_guess
+		if @lives > 0
+			puts "Enter a letter"
+			# .chomp	=> removes \r return line as default
+			guess = gets.chomp
+
+			puts "You guessed #{guess}"
+
+			good_guess = @word.first.include? guess  
+
+			if good_guess
+				puts "Good guess!"
+			else
+				@letters.delete(guess)
+				@lives -= 1
+				puts "Try again. You have #{ @lives } guesses left."
+
+				make_guess
+			end
+		else 
+			puts "Game over!"
+		end 
+	end
+
+	def begin
+		# ask user for a letter
+		puts "New game started... your word is #{ @word.first.size } characters long"
+		print_teaser
+		
 		puts "Clue: #{ @word.last }"
 		
-		puts "Enter a letter"
-		# .chomp	=> removes \r return line as default
-		guess = gets.chomp
-
-		puts "You guess #{guess}"
+		make_guess
 	end  
 
 end
