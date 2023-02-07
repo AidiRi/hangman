@@ -1,16 +1,17 @@
 class Hangman
 
 	def initialize
-		# ? [letters] var creates range from 'a' through 'z'
+		# @letters var creates range from 'a' through 'z'
 		# creating an array so that, after each wrong guess, can remove letter from array
 		@letters = ('a'..'z').to_a
 		# @word; turn var into instance var; can be accessed in any method in the class
-		# ? .sample 
+		# .sample => returns random element(s)
 		@word = words.sample
 		@lives = 7
+		@correct_guesses = []
 	end
 
-	# arr of arrs[word, clue/hint]
+	# arr of arr[word, clue/hint]
 	# can import from separate file
 	def words
 		[
@@ -26,10 +27,18 @@ class Hangman
 	def print_teaser
 		word_teaser = ""
 
-		@word.first.size.times do 
-			# word_teaser = word_teaser.concat("_ ")
-			word_teaser += "_ "
-		end
+		@word.first.each_char {|char|
+			if @correct_guesses.include?(char)
+				word_teaser += char
+			else 
+				word_teaser += "_"
+			end
+		}
+
+		# @word.first.size.times do 
+		# 	# word_teaser = word_teaser.concat("_ ")
+		# 	word_teaser += "_ "
+		# end
 
 		puts word_teaser
 	end
@@ -42,17 +51,20 @@ class Hangman
 
 			puts "You guessed #{guess}"
 
-			good_guess = @word.first.include? guess  
+			good_guess = @word.first.include?(guess)
 
 			if good_guess
-				puts "Good guess!"
+				puts "Correct!"
+				@correct_guesses << guess
+				print_teaser
 			else
 				@letters.delete(guess)
 				@lives -= 1
-				puts "Try again. You have #{ @lives } guesses left."
+				puts "Wrong, try again. You have #{ @lives } guesses left."
 
-				make_guess
 			end
+			make_guess
+			
 		else 
 			puts "Game over!"
 		end 
