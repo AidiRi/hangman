@@ -67,8 +67,10 @@ class Hangman
 			puts "You guessed #{guess}"
 
 			good_guess = @word.first.include? guess
-
-			if good_guess
+			
+			if guess == "exit"
+				puts "Thanks for playing :)"
+			elsif good_guess
 				puts "Correct!"
 				@correct_guesses << guess
 				@letters.delete guess
@@ -78,9 +80,8 @@ class Hangman
 				@letters.delete guess
 				@lives -= 1
 				puts "Wrong, try again. You have #{ @lives } guesses left."
-
+				make_guess
 			end
-			make_guess
 			
 		else 
 			puts "Game over!"
@@ -89,7 +90,8 @@ class Hangman
 
 	def begin
 		# ask user for a letter
-		puts "New game started... your word is #{ @word.first.size } characters long"
+		puts "New game started... your word is #{ @word.first.size } characters long."
+		puts "To exit game at any point, type 'exit'."
 		print_teaser
 		
 		puts "Clue: #{ @word.last }"
