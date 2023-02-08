@@ -8,7 +8,7 @@ class Hangman
 		# .sample => returns random element(s)
 		@word = words.sample
 		@lives = 7
-		@correct_guesses = []
+		# @correct_guesses = []
 		@word_teaser = ""
 
 		@word.first.size.times do 
@@ -32,24 +32,14 @@ class Hangman
 	end
 
 	def print_teaser last_guess = nil	
-		# @word.first.each_char {|char|
-		# 	if @correct_guesses.include?(char)
-		# 		@word_teaser += char
-		# 	else 
-		# 		@word_teaser += "_"
-		# 	end
-		# }	
-
 		# puts @letters
 
 		update_teaser(last_guess) unless last_guess.nil?
-
 		puts @word_teaser
 	end
 
 	def update_teaser last_guess
 		new_teaser = @word_teaser.split 
-
 		new_teaser.each_with_index do |letter, index| 
 			if letter == '_' && @word.first[index] == last_guess
 				new_teaser[index] = last_guess
@@ -64,20 +54,21 @@ class Hangman
 			# .chomp	=> removes \r return line as default
 			guess = gets.chomp
 
-			puts "You guessed #{guess}"
-
 			good_guess = @word.first.include? guess
 			
 			if guess == "exit"
 				puts "Thanks for playing :)"
 			elsif good_guess
 				puts "Correct!"
-				@correct_guesses << guess
-				@letters.delete guess
-
-				print_teaser guess
+				# @correct_guesses << guess
+				# @letters.delete guess
+				print_teaser(guess)
+				if @word_teaser.split.join == @word.first
+					puts "Congrats! You won!"
+				else make_guess
+				end
 			else
-				@letters.delete guess
+				# @letters.delete guess
 				@lives -= 1
 				puts "Wrong, try again. You have #{ @lives } guesses left."
 				make_guess
