@@ -1,12 +1,12 @@
 class Hangman
 
 	def initialize
-		# @letters var creates range from 'a' through 'z'
-		# creating an array so that, after each wrong guess, can remove letter from array
 		@letters = ('a'..'z').to_a
-		# @word; turn var into instance var; can be accessed in any method in the class
-		# .sample => returns random element(s)
+		# - @letters var creates range from 'a' through 'z'
+		# - creating an array so that, after each wrong guess, can remove letter from array
 		@word = words.sample
+		# - @word; turn var into instance var; can be accessed in any method in the class
+		# - .sample => returns random element(s)
 		@lives = 7
 		# @correct_guesses = []
 		@word_teaser = ""
@@ -18,8 +18,8 @@ class Hangman
 
 	end
 
-	# arr of arr[word, clue/hint]
-	# can import from separate file
+	# - arr of arr[word, clue/hint]
+	# - can import from separate file
 	def words
 		[
 			["cricket", "A game played by gentlefolks"],
@@ -51,7 +51,7 @@ class Hangman
 	def make_guess
 		if @lives > 0
 			puts "Enter a letter"
-			# .chomp	=> removes \r return line as default
+			# - .chomp	=> removes \r return line as default
 			guess = gets.chomp
 
 			good_guess = @word.first.include? guess
@@ -80,7 +80,7 @@ class Hangman
 	end
 
 	def begin
-		# ask user for a letter
+		# - ask user for a letter
 		puts "New game started... your word is #{ @word.first.size } characters long."
 		puts "To exit game at any point, type 'exit'."
 		print_teaser
